@@ -76,14 +76,14 @@ const AdminDashboard = () => {
           </div>}
         </div>
 
-        <nav className="flex flex-col gap-1 p-2">
+        <nav className="flex flex-col gap-1 p-3">
           {navItems.map((item) => (
             <button
               key={item.tab}
               onClick={() => setActiveTab(item.tab)}
-              className={`flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition-colors ${
+              className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all ${
                 activeTab === item.tab
-                  ? "bg-primary/10 text-primary"
+                  ? "bg-primary/10 text-primary shadow-sm"
                   : "text-muted-foreground hover:bg-secondary hover:text-foreground"
               }`}
             >
@@ -113,24 +113,26 @@ const AdminDashboard = () => {
             {/* KPIs */}
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {kpis.map((kpi) => (
-                <div key={kpi.label} className="rounded-lg bg-card p-5 shadow-surface ring-subtle">
+                <div key={kpi.label} className="rounded-xl bg-white p-6 shadow-surface border border-border hover:shadow-surface-lg transition-all">
                   <div className="flex items-center justify-between">
-                    <kpi.icon className="h-5 w-5 text-muted-foreground" strokeWidth={1.5} />
-                    <div className={`flex items-center gap-0.5 text-xs font-medium ${kpi.up ? "text-success" : "text-destructive"}`}>
-                      {kpi.up ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-                      {kpi.change}
+                    <div className="rounded-lg bg-primary/10 p-2.5">
+                      <kpi.icon className="h-5 w-5 text-primary" strokeWidth={1.5} />
+                    </div>
+                    <div className={`flex items-center gap-1 text-xs font-bold ${kpi.up ? "text-success" : "text-destructive"}`}>
+                      {kpi.up ? <TrendingUp className="h-3.5 w-3.5" /> : <TrendingDown className="h-3.5 w-3.5" />}
+                      <span>{kpi.change}</span>
                     </div>
                   </div>
-                  <p className="mt-3 font-mono-data text-2xl font-bold text-foreground">{kpi.value}</p>
-                  <p className="mt-0.5 text-xs text-muted-foreground">{kpi.label}</p>
+                  <p className="mt-4 font-mono-data text-3xl font-bold text-foreground">{kpi.value}</p>
+                  <p className="mt-1 text-sm text-muted-foreground">{kpi.label}</p>
                 </div>
               ))}
             </div>
 
             {/* Recent Activity */}
-            <div className="rounded-lg bg-card p-5 shadow-surface ring-subtle">
-              <h2 className="text-sm font-semibold text-foreground">Recent Activity</h2>
-              <div className="mt-4 space-y-3">
+            <div className="rounded-xl bg-white p-6 shadow-surface border border-border">
+              <h2 className="text-lg font-bold text-foreground mb-4">Recent Activity</h2>
+              <div className="space-y-2">
                 {[
                   { text: "New listing submitted: 2025 BMW M2", time: "2 min ago", icon: Car, color: "text-primary" },
                   { text: "User 'David Park' flagged for review", time: "15 min ago", icon: AlertTriangle, color: "text-warning" },
@@ -138,10 +140,12 @@ const AdminDashboard = () => {
                   { text: "New dealer registration: Pacific Toyota", time: "3 hours ago", icon: BadgeCheck, color: "text-primary" },
                   { text: "Dispute opened: Mercedes G 63 sale", time: "5 hours ago", icon: AlertTriangle, color: "text-destructive" },
                 ].map((activity, i) => (
-                  <div key={i} className="flex items-center gap-3 rounded-md px-2 py-2 transition-colors hover:bg-secondary">
-                    <activity.icon className={`h-4 w-4 shrink-0 ${activity.color}`} strokeWidth={1.5} />
+                  <div key={i} className="flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all hover:bg-secondary/50">
+                    <div className={`p-2 rounded-lg bg-primary/10`}>
+                      <activity.icon className={`h-4 w-4 ${activity.color}`} strokeWidth={1.5} />
+                    </div>
                     <span className="flex-1 text-sm text-foreground">{activity.text}</span>
-                    <span className="text-xs text-muted-foreground">{activity.time}</span>
+                    <span className="text-xs text-muted-foreground whitespace-nowrap">{activity.time}</span>
                   </div>
                 ))}
               </div>

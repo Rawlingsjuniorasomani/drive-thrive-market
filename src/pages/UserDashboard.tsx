@@ -204,43 +204,112 @@ const UserDashboard = () => {
         )}
 
         {tab === "messages" && (
-          <div className="space-y-2">
-            {["Prestige Motors", "Michael Chen", "Stuttgart Auto Gallery"].map((name, i) => (
-              <div key={i} className="flex items-center gap-3 rounded-lg bg-card p-4 shadow-surface ring-subtle transition-colors hover:bg-secondary/50 cursor-pointer">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary text-sm font-semibold text-secondary-foreground">
-                  {name.charAt(0)}
+          <div className="grid gap-6 lg:grid-cols-[300px,1fr]">
+            <div className="lg:order-2 space-y-2 lg:border-l border-border lg:pl-6">
+              <h3 className="font-bold text-foreground mb-4">Your Conversations</h3>
+              {["Prestige Motors", "Michael Chen", "Stuttgart Auto Gallery"].map((name, i) => (
+                <div key={i} className="flex items-center gap-3 rounded-xl bg-white p-4 border border-border shadow-surface transition-all hover:shadow-surface-md cursor-pointer hover:border-primary/30">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary shrink-0">
+                    {name.charAt(0)}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-semibold text-foreground truncate">{name}</p>
+                    <p className="text-xs text-muted-foreground truncate">Thanks for your interest in the vehicle...</p>
+                  </div>
+                  <div className="text-xs text-muted-foreground text-right shrink-0">{i === 0 ? "2m" : i === 1 ? "1h" : "3d"}</div>
                 </div>
-                <div className="flex-1">
-                  <p className="text-sm font-medium text-foreground">{name}</p>
-                  <p className="text-xs text-muted-foreground">Thanks for your interest in the vehicle...</p>
+              ))}
+            </div>
+
+            <div className="lg:order-1 rounded-xl bg-white border border-border shadow-surface overflow-hidden flex flex-col h-[500px]">
+              <div className="border-b border-border p-4 flex items-center justify-between bg-primary/5">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-sm font-bold text-white">
+                    P
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">Prestige Motors</p>
+                    <p className="text-xs text-muted-foreground">Active now</p>
+                  </div>
                 </div>
-                <span className="text-xs text-muted-foreground">{i === 0 ? "2m ago" : i === 1 ? "1h ago" : "3d ago"}</span>
               </div>
-            ))}
+
+              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                <div className="flex justify-start">
+                  <div className="max-w-xs bg-secondary p-3 rounded-lg text-sm text-foreground">
+                    <p>Hi, I'm interested in your 2024 BMW M4. Is it still available?</p>
+                    <p className="text-xs text-muted-foreground mt-1">10:30 AM</p>
+                  </div>
+                </div>
+                <div className="flex justify-end">
+                  <div className="max-w-xs bg-primary text-primary-foreground p-3 rounded-lg text-sm">
+                    <p>Yes, it's still available! Would you like to schedule a test drive?</p>
+                    <p className="text-xs text-primary-foreground/70 mt-1">10:45 AM</p>
+                  </div>
+                </div>
+                <div className="flex justify-start">
+                  <div className="max-w-xs bg-secondary p-3 rounded-lg text-sm text-foreground">
+                    <p>That sounds great. What times work best for you?</p>
+                    <p className="text-xs text-muted-foreground mt-1">10:50 AM</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="border-t border-border p-4 flex gap-2">
+                <input
+                  type="text"
+                  placeholder="Type a message..."
+                  className="flex-1 rounded-xl border border-border bg-white px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                />
+                <button className="bg-primary text-primary-foreground p-2.5 rounded-xl hover:opacity-90 transition-all">
+                  <MessageSquare className="h-5 w-5" strokeWidth={1.5} />
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
         {tab === "settings" && (
-          <div className="max-w-lg space-y-4">
-            <div className="rounded-lg bg-card p-5 shadow-surface ring-subtle">
-              <h3 className="text-sm font-semibold text-foreground">Profile Information</h3>
-              <div className="mt-4 space-y-3">
+          <div className="max-w-2xl space-y-6">
+            <div className="rounded-xl bg-white p-8 shadow-surface border border-border">
+              <h3 className="text-lg font-bold text-foreground mb-6">Profile Information</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Full Name</label>
-                  <input defaultValue="John Doe" className="w-full rounded-md bg-secondary px-3 py-2 text-sm text-foreground outline-none ring-subtle focus:ring-2 focus:ring-primary/20" />
+                  <label className="mb-2 block text-sm font-semibold text-foreground">Full Name</label>
+                  <input defaultValue="John Doe" className="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/30 transition-all" />
                 </div>
                 <div>
-                  <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Email</label>
-                  <input defaultValue="john.doe@email.com" className="w-full rounded-md bg-secondary px-3 py-2 text-sm text-foreground outline-none ring-subtle focus:ring-2 focus:ring-primary/20" />
+                  <label className="mb-2 block text-sm font-semibold text-foreground">Email</label>
+                  <input defaultValue="john.doe@email.com" className="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/30 transition-all" />
                 </div>
-                <div>
-                  <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Phone</label>
-                  <input defaultValue="+1 (555) 123-4567" className="w-full rounded-md bg-secondary px-3 py-2 text-sm text-foreground outline-none ring-subtle focus:ring-2 focus:ring-primary/20" />
+                <div className="md:col-span-2">
+                  <label className="mb-2 block text-sm font-semibold text-foreground">Phone</label>
+                  <input defaultValue="+1 (555) 123-4567" className="w-full rounded-xl border border-border bg-white px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/30 transition-all" />
                 </div>
               </div>
-              <button className="mt-4 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-all active:scale-95">
+              <button className="mt-6 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-md transition-all hover:opacity-90 active:scale-95">
                 Save Changes
               </button>
+            </div>
+
+            <div className="rounded-xl bg-white p-8 shadow-surface border border-border">
+              <h3 className="text-lg font-bold text-foreground mb-6">Seller Settings</h3>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 bg-secondary rounded-lg">
+                  <div>
+                    <p className="font-semibold text-foreground">Enable notifications for new messages</p>
+                    <p className="text-sm text-muted-foreground">Get alerts when buyers contact you</p>
+                  </div>
+                  <input type="checkbox" defaultChecked className="w-5 h-5 cursor-pointer" />
+                </div>
+                <div className="flex items-center justify-between p-4 bg-secondary rounded-lg">
+                  <div>
+                    <p className="font-semibold text-foreground">Show phone number to buyers</p>
+                    <p className="text-sm text-muted-foreground">Make it easier for buyers to contact you</p>
+                  </div>
+                  <input type="checkbox" defaultChecked className="w-5 h-5 cursor-pointer" />
+                </div>
+              </div>
             </div>
           </div>
         )}

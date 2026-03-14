@@ -7,26 +7,26 @@ const FilterSidebar = () => {
 
   const hasActiveFilters = filters.make || filters.bodyType || filters.fuelType || filters.transmission || filters.condition;
 
-  const selectClass = "w-full rounded-md bg-secondary px-3 py-2 text-sm text-foreground outline-none ring-subtle focus:ring-2 focus:ring-primary/20 transition-all appearance-none";
+  const selectClass = "w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/30 transition-all appearance-none cursor-pointer";
 
   return (
-    <aside className="space-y-5">
-      <div className="flex items-center justify-between">
+    <aside className="space-y-6">
+      <div className="flex items-center justify-between pb-4 border-b border-border">
         <div className="flex items-center gap-2">
-          <SlidersHorizontal className="h-4 w-4 text-muted-foreground" strokeWidth={1.5} />
-          <h2 className="text-sm font-semibold text-foreground">Filters</h2>
+          <SlidersHorizontal className="h-5 w-5 text-primary" strokeWidth={1.5} />
+          <h2 className="font-bold text-foreground">Filters</h2>
         </div>
         {hasActiveFilters && (
-          <button onClick={resetFilters} className="flex items-center gap-1 text-xs text-primary hover:underline">
-            <X className="h-3 w-3" strokeWidth={1.5} />
-            Clear all
+          <button onClick={resetFilters} className="flex items-center gap-1 text-xs font-medium text-primary hover:text-primary/80 transition-colors">
+            <X className="h-3.5 w-3.5" strokeWidth={2} />
+            Reset
           </button>
         )}
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-5">
         <div>
-          <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Make</label>
+          <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-foreground">Make</label>
           <select value={filters.make} onChange={(e) => setFilters({ make: e.target.value })} className={selectClass}>
             <option value="">All Makes</option>
             {makes.map((m) => <option key={m} value={m}>{m}</option>)}
@@ -34,7 +34,7 @@ const FilterSidebar = () => {
         </div>
 
         <div>
-          <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Body Type</label>
+          <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-foreground">Body Type</label>
           <select value={filters.bodyType} onChange={(e) => setFilters({ bodyType: e.target.value })} className={selectClass}>
             <option value="">All Types</option>
             {bodyTypes.map((b) => <option key={b} value={b}>{b}</option>)}
@@ -42,7 +42,7 @@ const FilterSidebar = () => {
         </div>
 
         <div>
-          <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Fuel Type</label>
+          <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-foreground">Fuel Type</label>
           <select value={filters.fuelType} onChange={(e) => setFilters({ fuelType: e.target.value })} className={selectClass}>
             <option value="">All Fuel Types</option>
             {fuelTypes.map((f) => <option key={f} value={f}>{f}</option>)}
@@ -50,7 +50,7 @@ const FilterSidebar = () => {
         </div>
 
         <div>
-          <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Transmission</label>
+          <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-foreground">Transmission</label>
           <select value={filters.transmission} onChange={(e) => setFilters({ transmission: e.target.value })} className={selectClass}>
             <option value="">All</option>
             {transmissions.map((t) => <option key={t} value={t}>{t}</option>)}
@@ -58,7 +58,7 @@ const FilterSidebar = () => {
         </div>
 
         <div>
-          <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Condition</label>
+          <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-foreground">Condition</label>
           <select value={filters.condition} onChange={(e) => setFilters({ condition: e.target.value })} className={selectClass}>
             <option value="">All</option>
             {conditions.map((c) => <option key={c} value={c}>{c}</option>)}
@@ -66,7 +66,7 @@ const FilterSidebar = () => {
         </div>
 
         <div>
-          <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Price Range</label>
+          <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-foreground">Price Range</label>
           <div className="flex items-center gap-2">
             <input
               type="number"
@@ -75,7 +75,7 @@ const FilterSidebar = () => {
               onChange={(e) => setFilters({ priceMin: Number(e.target.value) || 0 })}
               className={`${selectClass} font-mono-data`}
             />
-            <span className="text-muted-foreground">—</span>
+            <span className="text-muted-foreground text-xs">—</span>
             <input
               type="number"
               placeholder="Max"
@@ -87,7 +87,7 @@ const FilterSidebar = () => {
         </div>
 
         <div>
-          <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Sort By</label>
+          <label className="mb-2 block text-xs font-semibold uppercase tracking-wider text-foreground">Sort By</label>
           <select value={filters.sortBy} onChange={(e) => setFilters({ sortBy: e.target.value as any })} className={selectClass}>
             <option value="newest">Newest Listed</option>
             <option value="price-asc">Price: Low to High</option>
