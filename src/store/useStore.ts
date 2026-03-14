@@ -15,6 +15,15 @@ interface Filters {
   sortBy: "newest" | "price-asc" | "price-desc" | "mileage" | "popular";
 }
 
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+  rating: number;
+  total_sales: number;
+}
+
 interface AppState {
   favorites: string[];
   toggleFavorite: (id: string) => void;
@@ -23,6 +32,11 @@ interface AppState {
   resetFilters: () => void;
   isAdmin: boolean;
   setIsAdmin: (v: boolean) => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
+  token: string | null;
+  setToken: (token: string | null) => void;
+  logout: () => void;
 }
 
 const defaultFilters: Filters = {
@@ -54,6 +68,18 @@ export const useStore = create<AppState>()(
       resetFilters: () => set({ filters: defaultFilters }),
       isAdmin: false,
       setIsAdmin: (v) => set({ isAdmin: v }),
+      user: null,
+      setUser: (user) => set({ user }),
+      token: null,
+      setToken: (token) => {
+        if (token) localStorage.setItem('token', token);
+        else localStorage.removeItem('token');
+        set({ token });
+      },
+      logout: () => {
+        localStorage.removeItem('token');
+        set({ user: null, token: null });
+      },
     }),
     { name: "car-marketplace-store" }
   )
