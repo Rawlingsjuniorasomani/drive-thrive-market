@@ -1,22 +1,24 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Car, Heart, ShoppingBag, MessageSquare, Settings, Bell, Eye, Edit, Trash2 } from "lucide-react";
+import { Car, Heart, ShoppingBag, MessageSquare, Settings, Bell, Eye, Edit, Trash2, LayoutDashboard, TrendingUp, BarChart3 } from "lucide-react";
 import { cars, formatPrice, formatMileage } from "@/data/cars";
 import { useStore } from "@/store/useStore";
 
-type DashTab = "listings" | "purchases" | "offers" | "messages" | "settings";
+type DashTab = "overview" | "listings" | "seller" | "purchases" | "saved" | "messages" | "settings";
 
 const UserDashboard = () => {
-  const [tab, setTab] = useState<DashTab>("listings");
+  const [tab, setTab] = useState<DashTab>("overview");
   const { favorites } = useStore();
 
   const myListings = cars.slice(0, 3); // Mock user's listings
   const myPurchases = cars.slice(3, 5);
 
   const tabs = [
+    { label: "Overview", icon: LayoutDashboard, tab: "overview" as DashTab },
     { label: "My Listings", icon: Car, tab: "listings" as DashTab, count: myListings.length },
+    { label: "Seller Hub", icon: TrendingUp, tab: "seller" as DashTab },
     { label: "Purchases", icon: ShoppingBag, tab: "purchases" as DashTab, count: myPurchases.length },
-    { label: "Saved", icon: Heart, tab: "offers" as DashTab, count: favorites.length },
+    { label: "Saved", icon: Heart, tab: "saved" as DashTab, count: favorites.length },
     { label: "Messages", icon: MessageSquare, tab: "messages" as DashTab, count: 3 },
     { label: "Settings", icon: Settings, tab: "settings" as DashTab },
   ];
@@ -24,42 +26,99 @@ const UserDashboard = () => {
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <div className="border-b border-border bg-card px-4 py-6">
+      <div className="border-b border-border bg-gradient-to-r from-white to-primary/5 px-4 py-8">
         <div className="container mx-auto">
           <div className="flex items-center gap-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground">
+            <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-primary shadow-md text-xl font-bold text-primary-foreground">
               JD
             </div>
-            <div>
-              <h1 className="text-lg font-semibold text-foreground">John Doe</h1>
-              <p className="text-sm text-muted-foreground">john.doe@email.com · Member since Jan 2024</p>
+            <div className="flex-1">
+              <h1 className="text-2xl font-bold text-foreground">Welcome back, John</h1>
+              <p className="text-base text-muted-foreground">john.doe@email.com · Member since Jan 2024</p>
+            </div>
+            <div className="hidden md:flex items-center gap-2 text-sm">
+              <Bell className="h-5 w-5 text-muted-foreground" />
             </div>
           </div>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="border-b border-border bg-card">
-        <div className="container mx-auto flex gap-0 overflow-x-auto px-4">
+      <div className="border-b border-border bg-white">
+        <div className="container mx-auto flex gap-2 overflow-x-auto px-4">
           {tabs.map((t) => (
             <button
               key={t.tab}
               onClick={() => setTab(t.tab)}
-              className={`flex items-center gap-2 border-b-2 px-4 py-3 text-sm font-medium transition-colors whitespace-nowrap ${
-                tab === t.tab ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground"
+              className={`flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium transition-all whitespace-nowrap ${
+                tab === t.tab ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-secondary hover:text-foreground"
               }`}
             >
               <t.icon className="h-4 w-4" strokeWidth={1.5} />
               {t.label}
-              {t.count !== undefined && (
-                <span className="rounded-full bg-secondary px-1.5 py-0.5 text-[10px] font-bold">{t.count}</span>
+              {t.count !== undefined && t.count > 0 && (
+                <span className="ml-1 rounded-full bg-primary text-[10px] font-bold text-primary-foreground px-2 py-0.5">{t.count}</span>
               )}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto px-4 py-8">
+        {tab === "overview" && (
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+              <div className="rounded-xl bg-white p-6 shadow-surface border border-border">
+                <div className="flex items-center gap-4">
+                  <div className="rounded-lg bg-primary/10 p-3">
+                    <Car className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Active Listings</p>
+                    <p className="text-2xl font-bold text-foreground">{myListings.length}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-xl bg-white p-6 shadow-surface border border-border">
+                <div className="flex items-center gap-4">
+                  <div className="rounded-lg bg-primary/10 p-3">
+                    <ShoppingBag className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Purchases</p>
+                    <p className="text-2xl font-bold text-foreground">{myPurchases.length}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-xl bg-white p-6 shadow-surface border border-border">
+                <div className="flex items-center gap-4">
+                  <div className="rounded-lg bg-primary/10 p-3">
+                    <Heart className="h-6 w-6 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Saved Vehicles</p>
+                    <p className="text-2xl font-bold text-foreground">{favorites.length}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-xl bg-white p-6 shadow-surface border border-border">
+              <h3 className="font-semibold text-foreground mb-4">Quick Actions</h3>
+              <div className="flex flex-wrap gap-3">
+                <Link to="/sell" className="rounded-lg bg-primary px-6 py-2 text-sm font-medium text-primary-foreground transition-all hover:opacity-90">
+                  Post a Car
+                </Link>
+                <Link to="/search" className="rounded-lg border border-primary text-primary px-6 py-2 text-sm font-medium transition-all hover:bg-primary/5">
+                  Browse Cars
+                </Link>
+                <Link to="/messages" className="rounded-lg border border-border px-6 py-2 text-sm font-medium text-foreground transition-all hover:bg-secondary">
+                  Messages
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
         {tab === "listings" && (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -105,7 +164,38 @@ const UserDashboard = () => {
           </div>
         )}
 
-        {tab === "offers" && (
+        {tab === "seller" && (
+          <div className="space-y-6">
+            <div className="rounded-xl bg-gradient-to-r from-primary/10 to-white p-6 border border-primary/20">
+              <h3 className="text-lg font-bold text-foreground mb-2">Seller Performance</h3>
+              <p className="text-muted-foreground">Your stats as a seller on Drive Thrive Market</p>
+            </div>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
+              <div className="rounded-xl bg-white p-6 shadow-surface border border-border text-center">
+                <BarChart3 className="h-8 w-8 mx-auto text-primary mb-2" />
+                <p className="text-2xl font-bold text-foreground">8.5</p>
+                <p className="text-xs text-muted-foreground mt-1">Seller Rating</p>
+              </div>
+              <div className="rounded-xl bg-white p-6 shadow-surface border border-border text-center">
+                <Eye className="h-8 w-8 mx-auto text-primary mb-2" />
+                <p className="text-2xl font-bold text-foreground">1,240</p>
+                <p className="text-xs text-muted-foreground mt-1">Total Views</p>
+              </div>
+              <div className="rounded-xl bg-white p-6 shadow-surface border border-border text-center">
+                <ShoppingBag className="h-8 w-8 mx-auto text-primary mb-2" />
+                <p className="text-2xl font-bold text-foreground">12</p>
+                <p className="text-xs text-muted-foreground mt-1">Sold Items</p>
+              </div>
+              <div className="rounded-xl bg-white p-6 shadow-surface border border-border text-center">
+                <TrendingUp className="h-8 w-8 mx-auto text-primary mb-2" />
+                <p className="text-2xl font-bold text-foreground">$156K</p>
+                <p className="text-xs text-muted-foreground mt-1">Total Revenue</p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {tab === "saved" && (
           <div className="text-center py-12">
             <Heart className="mx-auto mb-3 h-8 w-8 text-muted-foreground/30" strokeWidth={1.5} />
             <p className="text-sm text-muted-foreground">{favorites.length} saved vehicle{favorites.length !== 1 ? "s" : ""}</p>

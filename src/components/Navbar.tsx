@@ -14,11 +14,11 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 bg-card/80 backdrop-blur-xl shadow-surface-md">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
-        <Link to="/" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary">
-            <span className="text-sm font-bold text-primary-foreground">M</span>
+        <Link to="/" className="flex items-center gap-2.5">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary shadow-md">
+            <span className="text-lg font-bold text-primary-foreground">DT</span>
           </div>
-          <span className="text-lg font-semibold tracking-tight text-foreground">MotorMarket</span>
+          <span className="text-xl font-bold tracking-tight text-foreground">Drive Thrive</span>
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">

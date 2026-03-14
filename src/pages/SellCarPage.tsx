@@ -7,27 +7,35 @@ const SellCarPage = () => {
   const [step, setStep] = useState(1);
   const totalSteps = 3;
 
-  const selectClass = "w-full rounded-md bg-secondary px-3 py-2.5 text-sm text-foreground outline-none ring-subtle focus:ring-2 focus:ring-primary/20 transition-all";
+  const selectClass = "w-full rounded-xl bg-white border border-border px-4 py-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/30 transition-all";
   const inputClass = selectClass;
 
   return (
-    <div className="min-h-screen">
-      <div className="border-b border-border bg-card px-4 py-4">
-        <div className="container mx-auto">
-          <h1 className="text-lg font-semibold text-foreground">Post Your Vehicle</h1>
-          <p className="text-sm text-muted-foreground">Step {step} of {totalSteps}</p>
-          <div className="mt-3 flex gap-1">
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-primary/5">
+      <div className="border-b border-border bg-white px-4 py-8">
+        <div className="container mx-auto max-w-3xl">
+          <Link to="/dashboard" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
+            <ArrowLeft className="h-4 w-4" />
+            Back to Dashboard
+          </Link>
+          <h1 className="text-3xl font-bold text-foreground">List Your Vehicle</h1>
+          <p className="text-base text-muted-foreground mt-2">Step {step} of {totalSteps} - Complete your listing details</p>
+          <div className="mt-6 flex gap-2">
             {Array.from({ length: totalSteps }).map((_, i) => (
-              <div key={i} className={`h-1 flex-1 rounded-full transition-colors ${i < step ? "bg-primary" : "bg-muted"}`} />
+              <div key={i} className="flex-1 flex items-center gap-2">
+                <div className={`h-2.5 flex-1 rounded-full transition-colors ${i < step ? "bg-primary" : "bg-border"}`} />
+                {i < totalSteps - 1 && <div className="w-1 h-1 rounded-full bg-border" />}
+              </div>
             ))}
           </div>
         </div>
       </div>
 
-      <div className="container mx-auto max-w-2xl px-4 py-8">
+      <div className="container mx-auto max-w-3xl px-4 py-12">
         {step === 1 && (
-          <div className="space-y-5">
-            <h2 className="text-sm font-semibold text-foreground">Vehicle Information</h2>
+          <div className="space-y-6">
+            <div className="rounded-xl bg-white p-8 shadow-surface border border-border">
+              <h2 className="text-xl font-bold text-foreground mb-6">Vehicle Information</h2>
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Make</label>
@@ -81,18 +89,20 @@ const SellCarPage = () => {
               <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">VIN (Optional)</label>
               <input placeholder="e.g. WBA5A5C55FD901234" className={`${inputClass} font-mono-data tracking-wider`} />
             </div>
+            </div>
           </div>
         )}
 
         {step === 2 && (
-          <div className="space-y-5">
-            <h2 className="text-sm font-semibold text-foreground">Photos & Description</h2>
+          <div className="space-y-6">
+            <div className="rounded-xl bg-white p-8 shadow-surface border border-border">
+              <h2 className="text-xl font-bold text-foreground mb-6">Photos & Description</h2>
             <div>
               <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Photos (up to 20)</label>
-              <div className="grid grid-cols-3 gap-2 md:grid-cols-4">
-                <button className="flex aspect-square flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border bg-secondary/50 transition hover:border-primary/30 hover:bg-secondary">
-                  <Camera className="h-6 w-6 text-muted-foreground" strokeWidth={1.5} />
-                  <span className="text-[10px] font-medium text-muted-foreground">Add Photo</span>
+              <div className="grid grid-cols-3 gap-3 md:grid-cols-5">
+                <button className="flex aspect-square flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-primary/30 bg-primary/5 transition hover:border-primary hover:bg-primary/10">
+                  <Camera className="h-8 w-8 text-primary" strokeWidth={1.5} />
+                  <span className="text-[10px] font-medium text-primary">Add Photo</span>
                 </button>
               </div>
             </div>
@@ -112,12 +122,14 @@ const SellCarPage = () => {
               <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Engine</label>
               <input placeholder="e.g. 3.0L Twin-Turbo I6" className={inputClass} />
             </div>
+            </div>
           </div>
         )}
 
         {step === 3 && (
-          <div className="space-y-5">
-            <h2 className="text-sm font-semibold text-foreground">Pricing & Listing Type</h2>
+          <div className="space-y-6">
+            <div className="rounded-xl bg-white p-8 shadow-surface border border-border">
+              <h2 className="text-xl font-bold text-foreground mb-6">Pricing & Listing Type</h2>
             <div>
               <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Asking Price</label>
               <div className="relative">
@@ -127,7 +139,7 @@ const SellCarPage = () => {
             </div>
             <div>
               <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Listing Type</label>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-3">
                 {[
                   { label: "Standard", desc: "Free · 30 days", selected: true },
                   { label: "Featured", desc: "$29 · 30 days", selected: false },
@@ -135,12 +147,12 @@ const SellCarPage = () => {
                 ].map((type) => (
                   <button
                     key={type.label}
-                    className={`rounded-lg p-3 text-left ring-subtle transition ${
-                      type.selected ? "bg-primary/10 ring-2 ring-primary" : "bg-card shadow-surface hover:bg-secondary"
+                    className={`rounded-xl p-4 text-left transition border ${
+                      type.selected ? "bg-primary/10 border-primary ring-2 ring-primary/20" : "bg-white border-border hover:border-primary hover:shadow-surface"
                     }`}
                   >
-                    <p className="text-sm font-medium text-foreground">{type.label}</p>
-                    <p className="text-[10px] text-muted-foreground">{type.desc}</p>
+                    <p className="text-sm font-semibold text-foreground">{type.label}</p>
+                    <p className="text-xs text-muted-foreground mt-1">{type.desc}</p>
                   </button>
                 ))}
               </div>
@@ -149,15 +161,16 @@ const SellCarPage = () => {
               <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-muted-foreground">Location</label>
               <input placeholder="City, State" className={inputClass} />
             </div>
+            </div>
           </div>
         )}
 
         {/* Navigation */}
-        <div className="mt-8 flex items-center justify-between">
+        <div className="mt-10 flex items-center justify-between gap-4">
           {step > 1 ? (
             <button
               onClick={() => setStep(step - 1)}
-              className="flex items-center gap-2 rounded-md bg-secondary px-4 py-2.5 text-sm font-medium text-secondary-foreground transition active:scale-95"
+              className="flex items-center gap-2 rounded-xl border border-border px-6 py-3 text-sm font-medium text-foreground transition hover:bg-secondary active:scale-95"
             >
               <ArrowLeft className="h-4 w-4" strokeWidth={1.5} />
               Back
@@ -167,13 +180,13 @@ const SellCarPage = () => {
           {step < totalSteps ? (
             <button
               onClick={() => setStep(step + 1)}
-              className="flex items-center gap-2 rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition active:scale-95"
+              className="flex items-center gap-2 rounded-xl bg-primary px-7 py-3 text-sm font-medium text-primary-foreground shadow-md transition hover:opacity-90 active:scale-95"
             >
               Continue
               <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
             </button>
           ) : (
-            <button className="flex items-center gap-2 rounded-md bg-success px-5 py-2.5 text-sm font-medium text-success-foreground transition active:scale-95">
+            <button className="flex items-center gap-2 rounded-xl bg-primary px-7 py-3 text-sm font-medium text-primary-foreground shadow-md transition hover:opacity-90 active:scale-95">
               <Check className="h-4 w-4" strokeWidth={1.5} />
               Submit Listing
             </button>

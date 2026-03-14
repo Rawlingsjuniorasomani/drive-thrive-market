@@ -65,12 +65,15 @@ const AdminDashboard = () => {
   return (
     <div className="flex min-h-screen bg-background">
       {/* Sidebar */}
-      <aside className={`sticky top-0 h-screen border-r border-border bg-card transition-all duration-300 ${sidebarExpanded ? "w-60" : "w-16"}`}>
-        <div className="flex h-16 items-center gap-2 border-b border-border px-4">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-primary">
-            <span className="text-sm font-bold text-primary-foreground">M</span>
+      <aside className={`sticky top-0 h-screen border-r border-border bg-white shadow-sm transition-all duration-300 ${sidebarExpanded ? "w-60" : "w-16"}`}>
+        <div className="flex h-16 items-center gap-3 border-b border-border px-4">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary shadow-md">
+            <span className="text-sm font-bold text-primary-foreground">DT</span>
           </div>
-          {sidebarExpanded && <span className="text-sm font-semibold text-foreground">Admin Panel</span>}
+          {sidebarExpanded && <div>
+            <span className="text-xs font-bold uppercase text-muted-foreground">Admin</span>
+            <p className="text-sm font-semibold text-foreground">Control Panel</p>
+          </div>}
         </div>
 
         <nav className="flex flex-col gap-1 p-2">
